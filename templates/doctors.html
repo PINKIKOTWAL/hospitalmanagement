@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-<h3>Patients</h3>
+<h3>Doctors</h3>
 <form method="POST" class="mb-3">
     <input name="name" placeholder="Name" required>
-    <input name="age" type="number" placeholder="Age" required>
-    <input name="gender" placeholder="Gender" required>
+    <input name="specialization" placeholder="Specialization" required>
     <input name="contact" placeholder="Contact" required>
     <button class="btn btn-primary">Add</button>
 </form>
 <table class="table table-bordered">
-<tr><th>ID</th><th>Name</th><th>Age</th><th>Gender</th><th>Contact</th></tr>
-{% for p in patients %}
+<tr><th>ID</th><th>Name</th><th>Specialization</th><th>Contact</th></tr>
+{% for d in doctors %}
 <tr>
-<td>{{p[0]}}</td><td>{{p[1]}}</td><td>{{p[2]}}</td><td>{{p[3]}}</td><td>{{p[4]}}</td>
+<td>{{d[0]}}</td>
+<td>{{d[1]}}</td>
+<td>{{d[2]}}</td>
+<td>{{d[3]}}</td>
 </tr>
 {% endfor %}
 </table>
 {% endblock %}
-

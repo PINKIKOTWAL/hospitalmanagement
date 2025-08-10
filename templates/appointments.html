@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Appointments</h3>
+<form method="POST" class="mb-3">
+    <input name="patient_id" type="number" placeholder="Patient ID" required>
+    <input name="doctor_id" type="number" placeholder="Doctor ID" required>
+    <input name="date" type="date" required>
+    <input name="time" type="time" required>
+    <button class="btn btn-primary">Add</button>
+</form>
+
+<table class="table table-bordered">
+<tr><th>ID</th><th>Patient ID</th><th>Doctor ID</th><th>Date</th><th>Time</th></tr>
+{% for a in appointments %}
+<tr>
+<td>{{ a[0] }}</td>
+<td>{{ a[1] }}</td>
+<td>{{ a[2] }}</td>
+<td>{{ a[3] }}</td>
+<td>{{ a[4] }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
+
