@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>🏥 Hospital Management</h1>
+    <nav>
+        <a href="/patients">Patients</a> |
+        <a href="/doctors">Doctors</a> |
+        <a href="/appointments">Appointments</a>
+    </nav>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>

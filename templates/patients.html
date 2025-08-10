@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Patients</h2>
+<form method="POST">
+    Name: <input type="text" name="name" required>
+    Age: <input type="number" name="age" required>
+    Gender: <input type="text" name="gender">
+    Disease: <input type="text" name="disease">
+    <button type="submit">Add Patient</button>
+</form>
+
+<h3>Patients List</h3>
+<ul>
+{% for p in patients %}
+    <li>{{ p['name'] }} ({{ p['age'] }} y/o, {{ p['gender'] }}) - {{ p['disease'] }}</li>
+{% endfor %}
+</ul>
+{% endblock %}
