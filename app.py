@@ -21,11 +21,49 @@ def index():
 @app.route('/patients', methods=['GET', 'POST'])
 def patients():
     if request.method == 'POST':
-        query_db("INSERT INTO patients (name, age, gender, contact) VALUES (?, ?, ?, ?)",
-                 (request.form['name'], request.form['age'], request.form['gender'], request.form['contact']))
-        return redirect('/patients')
+        action = request.form.get('action')
+
+        if action == 'add':
+            query_db("INSERT INTO patients (name, age, gender, contact) VALUES (?, ?, ?, ?)",
+                     (request.form['name'], request.form['age'], request.form['gender'], request.form['contact']))
+            return redirect('/patients')
+
+        elif action == 'update':
+            query_db("UPDATE patients SET name=?, age=?, gender=?, contact=? WHERE id=?",
+                     (request.form['name'], request.form['age'], request.form['gender'], request.form['contact'], request.form['id']))
+            return redirect('/patients')
+
+        elif action == 'search':
+            keyword = request.form['keyword']
+            data = query_db("SELECT * FROM patients WHERE name LIKE ?", ('%' + keyword + '%',))
+            return render_template('patients.html', patients=data, search_keyword=keyword)
+
     data = query_db("SELECT * FROM patients")
     return render_template('patients.html', patients=data)
+
+
+@app.route('/patients/edit/<int:id>', methods=['GET', 'POST'])
+def edit_patient(id):
+    if request.method == 'POST':
+        # Update the patient
+        query_db("UPDATE patients SET name=?, age=?, gender=?, contact=? WHERE id=?",
+                 (request.form['name'], request.form['age'], request.form['gender'], request.form['contact'], id))
+        return redirect('/patients')
+
+    # GET request - show form pre-filled
+    patient = query_db("SELECT * FROM patients WHERE id=?", (id,), one=True)
+    data = query_db("SELECT * FROM patients")
+    return render_template('patients.html', patients=data, edit_patient=patient)
+
+
+
+@app.route('/patients/delete/<int:id>')
+def delete_patient(id):
+    query_db("DELETE FROM patients WHERE id=?", (id,))
+    return redirect('/patients')
+
+
+
 
 @app.route('/doctors', methods=['GET', 'POST'])
 def doctors():
